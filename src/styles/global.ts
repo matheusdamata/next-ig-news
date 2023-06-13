@@ -83,5 +83,5 @@ export const globalStyles = globalCss({
     html: {
       fontSize: '87.5%',
     },
-  }
+  },
 })

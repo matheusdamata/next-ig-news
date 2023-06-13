@@ -18,6 +18,8 @@ export const {
       cyan500: '#61dafb',
 
       gray900: '#121214',
+      gray850: '#1f2729',
+      gray800: '#29292e',
       gray300: '#a8a8b3',
       gray100: '#e1e1e6',
 
