@@ -1,5 +1,7 @@
 import { SubscribeButtonContainer } from '@/styles/components/subscribeButton'
 
-export function SubscribeButton() {
+import { SubscribeButtonProps } from '@/types/globalComponents'
+
+export function SubscribeButton({ priceId }: SubscribeButtonProps) {
   return <SubscribeButtonContainer>Inscreva-se agora</SubscribeButtonContainer>
 }

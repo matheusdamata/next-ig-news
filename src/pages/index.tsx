@@ -1,13 +1,18 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import { GetStaticProps } from 'next'
 
 import { HomeContainer, SectionHomeHero } from '@/styles/pages/home'
 
 import HomeImage from '../../public/images/avatar.svg'
 import { SubscribeButton } from '@/components/SubscribeButton'
-import { GetServerSideProps } from 'next'
 
-export default function Home() {
+import { stripe } from '@/services/stripe'
+
+import { HomeProps } from '@/types/global'
+import { priceFormatter } from '@/utils/formatter'
+
+export default function Home({ product }: HomeProps) {
   return (
     <>
       <Head>Início | ig.news</Head>
@@ -22,10 +27,10 @@ export default function Home() {
 
           <p>
             Tenha acesso a todas as publicações <br />
-            <span>por R$9,90 mês</span>
+            <span>por {priceFormatter.format(product.amount)} /mês</span>
           </p>
 
-          <SubscribeButton />
+          <SubscribeButton priceId={product.priceId} />
         </SectionHomeHero>
 
         <Image src={HomeImage} alt="Girl coding" />
@@ -34,8 +39,18 @@ export default function Home() {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
+  const price = await stripe.prices.retrieve('price_1NINvJALTrFKDx9IUC5603u0')
+
+  const product = {
+    priceId: price.id,
+    amount: price.unit_amount! / 100,
+  }
+
   return {
-    props: {}
+    props: {
+      product,
+    },
+    revalidate: 60 * 60 * 24, // 24 hours
   }
 }
