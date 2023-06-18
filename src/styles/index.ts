@@ -20,6 +20,7 @@ export const {
       gray900: '#121214',
       gray850: '#1f2729',
       gray800: '#29292e',
+      gray700: '#323238',
       gray300: '#a8a8b3',
       gray100: '#e1e1e6',
 

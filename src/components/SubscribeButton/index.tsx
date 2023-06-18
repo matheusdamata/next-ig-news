@@ -13,7 +13,7 @@ export function SubscribeButton({ priceId }: SubscribeButtonProps) {
       signIn('github')
       return
     }
-    
+
     try {
       const response = await api.post('/subscribe')
 
@@ -22,14 +22,16 @@ export function SubscribeButton({ priceId }: SubscribeButtonProps) {
       const stripe = await getStripeJs()
 
       await stripe?.redirectToCheckout({
-        sessionId
+        sessionId,
       })
-      
     } catch (err) {
       alert(err)
     }
-    
   }
 
-  return <SubscribeButtonContainer onClick={handleSubscribe}>Inscreva-se agora</SubscribeButtonContainer>
+  return (
+    <SubscribeButtonContainer onClick={handleSubscribe}>
+      Inscreva-se agora
+    </SubscribeButtonContainer>
+  )
 }

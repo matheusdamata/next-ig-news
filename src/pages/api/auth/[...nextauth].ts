@@ -12,7 +12,7 @@ export const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user}) {
+    async jwt({ token, user }) {
       if (user) token.user = user
       return token
     },

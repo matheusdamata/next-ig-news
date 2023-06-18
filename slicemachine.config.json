@@ -1,0 +1,5 @@
+{
+  "repositoryName": "ignews-next-matheus-da-matag",
+  "adapter": "@slicemachine/adapter-next",
+  "libraries": ["./slices"]
+}

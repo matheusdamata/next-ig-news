@@ -1,14 +1,14 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { getServerSession } from "next-auth/next"
-import { stripe } from "@/services/stripe";
-import { authOptions } from "./auth/[...nextauth]";
+import { NextApiRequest, NextApiResponse } from 'next'
+import { getServerSession } from 'next-auth/next'
+import { stripe } from '@/services/stripe'
+import { authOptions } from './auth/[...nextauth]'
 import { query as q } from 'faunadb'
-import { fauna } from "@/services/fauna";
+import { fauna } from '@/services/fauna'
 
 type User = {
   ref: {
     id: string
-  },
+  }
   data: {
     stripe_customer_id: string
   }
@@ -27,9 +27,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     q.Get(
       q.Match(
         q.Index('user_by_email'),
-        q.Casefold(session?.user?.email as any)
-      )
-    )
+        q.Casefold(session?.user?.email as any),
+      ),
+    ),
   )
 
   let customerId = user.data.stripe_customer_id
@@ -40,13 +40,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     })
 
     await fauna.query(
-      q.Update(
-        q.Ref(q.Collection('users'), user.ref.id), {
-          data: {
-            stripe_customer_id: stripeCustomer.id
-          }
-        }
-      )
+      q.Update(q.Ref(q.Collection('users'), user.ref.id), {
+        data: {
+          stripe_customer_id: stripeCustomer.id,
+        },
+      }),
     )
 
     customerId = stripeCustomer.id
@@ -59,16 +57,16 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     line_items: [
       {
         price: 'price_1NINvJALTrFKDx9IUC5603u0',
-        quantity: 1
-      }
+        quantity: 1,
+      },
     ],
     mode: 'subscription',
     allow_promotion_codes: true,
     success_url: process.env.STRIPE_SUCCESS_URL as any,
-    cancel_url: process.env.STRIPE_CANCEL_URL
+    cancel_url: process.env.STRIPE_CANCEL_URL,
   })
 
   return res.status(200).json({
-    sessionId: stripeCheckoutSession.id
+    sessionId: stripeCheckoutSession.id,
   })
 }
