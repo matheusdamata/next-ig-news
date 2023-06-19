@@ -1,8 +1,23 @@
-import { PostListContainer, PostsContainer } from '@/styles/pages/posts'
-import Head from 'next/head'
+import { GetStaticProps } from 'next'
 import Link from 'next/link'
+import Head from 'next/head'
 
-export default function Posts() {
+import { createClient } from '../../../prismicio'
+
+import { PostListContainer, PostsContainer } from '@/styles/pages/posts'
+
+type Post = {
+  slug: string
+  title: string
+  excerpt: string
+  updatedAt: string
+}
+
+type PostsProps = {
+  posts: Post[]
+}
+
+export default function Posts({ posts }: PostsProps) {
   return (
     <>
       <Head>
@@ -11,43 +26,50 @@ export default function Posts() {
 
       <PostsContainer>
         <PostListContainer>
-          <Link href="/">
-            <time>18 de junho de 2023</time>
-            <strong>
-              As principais lições e dicas compiladas para quem está começando
-            </strong>
-            <p>
-              Hoje devs são peças fundamentais de todo negócio, estão nas
-              startups e nas pequenas e médias empresas que buscam soluções
-              tecnológicas para seus produtos e serviços.
-            </p>
-          </Link>
-
-          <Link href="/">
-            <time>18 de junho de 2023</time>
-            <strong>
-              As principais lições e dicas compiladas para quem está começando
-            </strong>
-            <p>
-              Hoje devs são peças fundamentais de todo negócio, estão nas
-              startups e nas pequenas e médias empresas que buscam soluções
-              tecnológicas para seus produtos e serviços.
-            </p>
-          </Link>
-
-          <Link href="/">
-            <time>18 de junho de 2023</time>
-            <strong>
-              As principais lições e dicas compiladas para quem está começando
-            </strong>
-            <p>
-              Hoje devs são peças fundamentais de todo negócio, estão nas
-              startups e nas pequenas e médias empresas que buscam soluções
-              tecnológicas para seus produtos e serviços.
-            </p>
-          </Link>
+          {posts.map((post) => (
+            <Link href="/" key={post.slug}>
+              <time>{post.updatedAt}</time>
+              <strong>{post.title}</strong>
+              <p>{post.excerpt}</p>
+            </Link>
+          ))}
         </PostListContainer>
       </PostsContainer>
     </>
   )
+}
+
+export const getStaticProps: GetStaticProps = async ({ previewData }) => {
+  const prismic = createClient()
+
+  const response = await prismic.getByType('publication', {
+    fetch: ['publication.title', 'publication.content'],
+    pageSize: 100,
+  })
+
+  const posts = response.results.map((post: any) => {
+    return {
+      slug: post.uid,
+      title: post.data.title,
+      excerpt:
+        post.data.content.find((content: any) => content.type === 'paragraph')
+          ?.text ?? '',
+      updatedAt: new Date(post.last_publication_date).toLocaleDateString(
+        'pt-BR',
+        {
+          day: '2-digit',
+          month: 'long',
+          year: 'numeric',
+        },
+      ),
+    }
+  })
+
+  console.log('Res: ', posts)
+
+  return {
+    props: {
+      posts,
+    },
+  }
 }
