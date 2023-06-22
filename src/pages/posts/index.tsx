@@ -27,7 +27,7 @@ export default function Posts({ posts }: PostsProps) {
       <PostsContainer>
         <PostListContainer>
           {posts.map((post) => (
-            <Link href="/" key={post.slug}>
+            <Link href={`/posts/${post.slug}`} key={post.slug}>
               <time>{post.updatedAt}</time>
               <strong>{post.title}</strong>
               <p>{post.excerpt}</p>
