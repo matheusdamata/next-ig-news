@@ -14,6 +14,11 @@ export const HeaderContent = styled('div', {
   display: 'flex',
   alignItems: 'center',
 
+  '& > a': {
+    fontSize: '2rem',
+    fontWeight: 'bold',
+  },
+
   nav: {
     display: 'flex',
     flexDirection: 'row',

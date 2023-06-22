@@ -17,7 +17,7 @@ export function SignInButton() {
   ) : (
     <SignInButtonContainer onClick={() => signIn('github')}>
       <FaGithub color="#eba417" />
-      Sign in with Github
+      Entre com Github
     </SignInButtonContainer>
   )
 }

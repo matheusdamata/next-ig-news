@@ -39,6 +39,12 @@ export const SectionHomeHero = styled('section', {
     span: {
       color: '$cyan500',
       fontWeight: 'bold',
+
+      strong: {
+        fontSize: '2rem',
+        letterSpacing: -2,
+        color: '$yellow500',
+      },
     },
   },
 

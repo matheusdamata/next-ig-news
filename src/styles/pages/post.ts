@@ -1,13 +1,13 @@
 import { styled } from '..'
 
 export const PostContainer = styled('main', {
-  maxWidth: '1120px',
+  maxWidth: '70rem',
   margin: '0 auto',
   padding: '0 2rem',
 })
 
 export const PostContent = styled('article', {
-  maxWidth: '720px',
+  maxWidth: '45rem',
   margin: '5rem auto 0',
 
   h1: {
@@ -38,6 +38,35 @@ export const RenderingDivContent = styled('div', {
 
     li: {
       margin: '0.5rem 0',
+    },
+  },
+
+  variants: {
+    preview: {
+      true: {
+        background: 'linear-gradient($gray100, transparent)',
+        backgroundClip: 'text',
+        '-webkit-text-fill-color': 'transparent',
+      },
+    },
+  },
+})
+
+export const PostContinueReadingContainer = styled('div', {
+  padding: '2rem',
+  textAlign: 'center',
+  background: '$gray850',
+  borderRadius: '100px',
+  fontSize: '1.25rem',
+  fontWeight: 'bold',
+  margin: '4rem 0 2rem',
+
+  a: {
+    color: '$yellow500',
+    margin: '0 0 0 0.5rem',
+
+    '&:hover': {
+      textDecoration: 'underline',
     },
   },
 })

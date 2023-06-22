@@ -27,7 +27,7 @@ export default function Posts({ posts }: PostsProps) {
       <PostsContainer>
         <PostListContainer>
           {posts.map((post) => (
-            <Link href={`/posts/${post.slug}`} key={post.slug}>
+            <Link href={`/posts/preview/${post.slug}`} key={post.slug}>
               <time>{post.updatedAt}</time>
               <strong>{post.title}</strong>
               <p>{post.excerpt}</p>
@@ -64,8 +64,6 @@ export const getStaticProps: GetStaticProps = async ({ previewData }) => {
       ),
     }
   })
-
-  console.log('Res: ', posts)
 
   return {
     props: {

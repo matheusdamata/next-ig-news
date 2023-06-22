@@ -15,7 +15,9 @@ import { priceFormatter } from '@/utils/formatter'
 export default function Home({ product }: HomeProps) {
   return (
     <>
-      <Head>Início | ig.news</Head>
+      <Head>
+        <title>Início | dev.news</title>
+      </Head>
 
       <HomeContainer>
         <SectionHomeHero>
@@ -26,8 +28,10 @@ export default function Home({ product }: HomeProps) {
           </h1>
 
           <p>
-            Tenha acesso a todas as publicações <br />
-            <span>por {priceFormatter.format(product.amount)} /mês</span>
+            Mantenha o acesso a todas as publicações <br />
+            <span>
+              por <strong>{priceFormatter.format(product.amount)}</strong> /mês
+            </span>
           </p>
 
           <SubscribeButton priceId={product.priceId} />
